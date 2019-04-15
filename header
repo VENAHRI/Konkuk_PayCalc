@@ -15,5 +15,4 @@
 #define vector<string> w_nameList //
 #define hash_map<string, w_Doc> w_Book //
 //
-<!-- 4. 계산기-->
-<!-- 위에 다 있음-->
+
