@@ -1,0 +1,16 @@
+//----1. header----//
+#include <iostream> //입출력함수
+#include <fstream>  //파일입출력함수
+#include <string> //문자열 처리
+
+#include <vector> //
+#include <hash_map> //
+
+//----2. 클래스 정보----//
+#include "w_Doc.h" //근무일지 
+#include "wRecord.h" //근무기록 한줄
+#include "ctime.h"  //시각 저장
+
+//----3. 전역 변수----//
+#define vector<string> w_nameList //
+#define hash_map<string, w_Doc> w_Book //
