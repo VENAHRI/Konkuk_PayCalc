@@ -155,6 +155,7 @@ int main()
 			while (check != 1 || check != 2)//예외 처리
 			{
 				cout << "1,2중 하나의 숫자를 입력하시오 : ";
+				cin >> check;
 			}
 			
 			if (check == 1)
@@ -176,10 +177,11 @@ int main()
 
 
 
-			cin >> check;//1,2중 하나만 입력
+		
 
 			while (check != 1 || check != 2)//예외처리
 			{
+				cin >> check;//1,2중 하나만 입력
 				cout << "1,2중 하나의 숫자를 입력하시오 : ";
 			}
 
