@@ -1,3 +1,4 @@
+#define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -12,19 +13,20 @@ char inputString[MAX_SIZE];//w_name.txt파일 읽을 때 한줄한줄 line받아
 int main()
 {
 	string w_name;//사업장 이름
-	int w_hpay,w_date;//시급, 계약날짜
-	bool w_night, w_weekend, w_tax,error_check=false;//야간수당여부, 주휴수당여부, 
+	int w_hpay, w_date;//시급, 계약날짜
+	bool w_night, w_weekend, w_tax, error_check = false;//야간수당여부, 주휴수당여부, 
 	int N;//for문 인덱스(정보 입력받는 for문)
 	string input_name[6] =
 	{ "사업장이름","시급","계약날짜","야간수당여부","주휴수당여부","소득세" };
 	//정보 입력할 때 어디 부분이 틀렸는지 알려주기 위해 만든 string형 배열.
 
-	
 
-	int count=0;//정보들 출력할때 한개 이상이면 '/'로 구분해야 하기 때문에
+
+	int count = 0;//정보들 출력할때 한개 이상이면 '/'로 구분해야 하기 때문에
 	//틀린 변수 개수 세주기 위해 선언.
-	
-	while(1){
+
+	while (1) {
+		error_check = false;
 		count = 0;//count변수 초기화
 		input_name[0] = "사업장이름";//input_name 첫번째 원소는 조건에 따라 달라지므로, 초기화.
 		//입력받기 시작.
@@ -43,14 +45,14 @@ int main()
 
 		for (N = 0; N < 6; N++)
 		{
-			switch (N)
+ 			switch (N)
 			{
 			case 0://사업장이름 조건 틀렸을 때
-				if (iter == w_nameList.end() && w_name.length > 20) {//중복되는건 아니지만, 조건 틀렸을때
+				if (iter == w_nameList.end() && w_name.length() > 20) {//중복되는건 아니지만, 조건 틀렸을때
 
 					cout << input_name[N];//사업장 이름이 틀렸다고 출력
 					count++;//"/"여부를 위해 count++;
-					
+
 					error_check = true;//"가 틀렸습니다" 구문 출력해주기 위해 error_check=true로 바꿔줌.
 
 				}
@@ -152,16 +154,14 @@ int main()
 
 			cin >> check;//1,2중 입력
 
-			while (check != 1 || check != 2)//예외 처리
+			while (check != 1 && check != 2)//예외 처리
 			{
 				cout << "1,2중 하나의 숫자를 입력하시오 : ";
 				cin >> check;
 			}
-			
-			if (check == 1)
-				break;//while문 밖으로 나가지나??
-			else if (check == 2)
-				return;//메인 메뉴로 돌아감(WorkPlace()함수 강제종료)
+
+			if (check == 2)
+				return 999;//메인 메뉴로 돌아감(WorkPlace()함수 강제종료)
 
 
 		}
@@ -177,28 +177,25 @@ int main()
 
 
 
-		
+			cin >> check;//1,2중 하나만 입력
 
-			while (check != 1 || check != 2)//예외처리
+			while (check != 1 && check != 2)//예외처리
 			{
 				cin >> check;//1,2중 하나만 입력
 				cout << "1,2중 하나의 숫자를 입력하시오 : ";
 			}
 
 			if (check == 1)
-				goto clear;//while문 탈출.
-
-			else if (check == 2)
-				break;//다시 while문 loop 돈다.(?)
+				break;//while문 탈출.
 
 		}
 
 	}
 
-clear ://입력을 모두 조건에 맞게 입력하였다고 사용자가 최종 판단한 이후
+//입력을 모두 조건에 맞게 입력하였다고 사용자가 최종 판단한 이후
 	vector<string>::iterator iter;
-	
-	for (iter = w_nameList.begin(); iter <= w_nameList.end(); iter++)
+
+	for (iter = w_nameList.begin(); iter != w_nameList.end(); iter++)
 		cout << *iter << endl;//지금까지의 사업장 이름 출력
 
 	cout << w_name << endl;//최근 입력한 사업장 이름 출력.
@@ -210,7 +207,7 @@ clear ://입력을 모두 조건에 맞게 입력하였다고 사용자가 최�
 	if (w_night == 1 && w_weekend == 1 && w_tax == 1)
 		out << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "O" << "/" << "O" << "/" << 8.5 << "%" << endl;
 
-	else if (w_night == 0 && w_weekend == 1 && w_tax ==	1 )
+	else if (w_night == 0 && w_weekend == 1 && w_tax == 1)
 		out << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "O" << "/" << "X" << "/" << 8.5 << "%" << endl;
 
 	else if (w_night == 1 && w_weekend == 0 && w_tax == 1)
@@ -250,6 +247,6 @@ clear ://입력을 모두 조건에 맞게 입력하였다고 사용자가 최�
 	cout << endl;
 
 	system("PAUSE");//계속하려면 아무키나 누르세요가 자동 출력됨.
-	
+
 	return 0;
 }
