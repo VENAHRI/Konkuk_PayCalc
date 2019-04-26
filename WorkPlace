@@ -1,3 +1,22 @@
+/* 윤년 체크 해야하나?*/
+
+/* 수정사항 : 
+1. 사업장 정보 출력할 때, 무조건 "w_name.txt" 로 출력하는게 아니라 (w_name) + ".txt" 로 출력하게 함.
+-> nameOut 이라는 ofstream 사용
+
+2. 사업장 이름만 따로 저장하는 TeamProject_PayCalc_w_name.txt 파일 생성 및 w_name 저장
+(여기서 만약에 이미 있는 사업장을 업데이트 하는 상황이라면 같은 사업장 이름이 두 번 들어갈 수 있기 때문에 그 경우는 제외함)
+ex) GS25 를 두번 입력해도 GS25는 TeamProject_PayCalc_w_name.txt 에 한 번만 입력되게 함
+
+-> onlyNameIn 이라는 ifstream 이랑 , nameOut 이라는 ostream 사용
+
+3. 신규 사업장 추가의 경우, 전역변수로 선언된 w_nameList 벡터에 넣어줌 */
+
+
+
+
+
+
 #define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS
 #include <iostream>
 #include <fstream>
@@ -6,7 +25,7 @@
 #include <hash_map>
 using namespace std;
 
-vector<string>w_nameList;//사업장 이름 중복되는 지 체크하기 위해 존재하는 전역변수
+vector<string>w_nameList;//사업장 이름 중복되는 지 체크하기 위해 존재하는 전역변수  , 
 #define MAX_SIZE 100
 char inputString[MAX_SIZE];//w_name.txt파일 읽을 때 한줄한줄 line받아주는 변수
 
@@ -200,45 +219,62 @@ int main()
 
 	cout << w_name << endl;//최근 입력한 사업장 이름 출력.
 
+	ifstream onlyNameIn;
+	onlyNameIn.open(w_name + ".txt"); // 만약에 GS25 라는 사업장 파일이 이미 있다면, GS25는 이미 TeamProject_PayCalc_w_name.txt 파일에 존재할 것이다.
 
+	if (!onlyNameIn) { // 위에서 open 해봤는데 GS25 라는 파일이 없으면 사업장 이름만 따로 저장해주고 GS25 라는 파일이 있으면 저장하지 않는다.
+		ofstream onlyNameOut; 
+		onlyNameOut.open("TeamProject_PayCalc_w_name.txt", ios::app); // 사업장 이름만 저장하는 TeamProject_PayCalc_w_name 텍스트 파일 출력.
+		onlyNameOut << w_name << endl;
+		onlyNameOut.close();
+		w_nameList.push_back(w_name); // 사업장 이름만 따로 저장하는 전역변수 w_nameList 에도 넣어준다.
+	}
 
-	ofstream out("w_name.txt");//근무일지에 새로 입력한 정보들 입력
+	ofstream nameOut;//근무일지에 새로 입력한 정보들 입력
+	nameOut.open(w_name + ".txt", ios::app);
 
 	if (w_night == 1 && w_weekend == 1 && w_tax == 1)
-		out << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "O" << "/" << "O" << "/" << 8.5 << "%" << endl;
+		nameOut << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "O" << "/" << "O" << "/" << 8.5 << "%" << endl;
 
 	else if (w_night == 0 && w_weekend == 1 && w_tax == 1)
-		out << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "O" << "/" << "X" << "/" << 8.5 << "%" << endl;
+		nameOut << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "O" << "/" << "X" << "/" << 8.5 << "%" << endl;
 
 	else if (w_night == 1 && w_weekend == 0 && w_tax == 1)
-		out << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "X" << "/" << "O" << "/" << 8.5 << "%" << endl;
+		nameOut << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "X" << "/" << "O" << "/" << 8.5 << "%" << endl;
 
 	else if (w_night == 1 && w_weekend == 1 && w_tax == 0)
-		out << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "O" << "/" << "O" << "/" << 3.3 << "%" << endl;
+		nameOut << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "O" << "/" << "O" << "/" << 3.3 << "%" << endl;
 
 	else if (w_night == 0 && w_weekend == 0 && w_tax == 1)
-		out << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "X" << "/" << "X" << "/" << 8.5 << "%" << endl;
+		nameOut << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "X" << "/" << "X" << "/" << 8.5 << "%" << endl;
 
 	else if (w_night == 0 && w_weekend == 1 && w_tax == 0)
-		out << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "X" << "/" << "O" << "/" << 3.3 << "%" << endl;
+		nameOut << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "X" << "/" << "O" << "/" << 3.3 << "%" << endl;
 
 	else if (w_night == 1 && w_weekend == 0 && w_tax == 0)
-		out << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "O" << "/" << "X" << "/" << 3.3 << "%" << endl;
+		nameOut << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "O" << "/" << "X" << "/" << 3.3 << "%" << endl;
 
 	else if (w_night == 0 && w_weekend == 0 && w_tax == 0)
-		out << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "X" << "/" << "X" << "/" << 3.3 << "%" << endl;
+		nameOut << "@" << w_name << "/" << w_hpay << "/" << w_date << "/" << "X" << "/" << "X" << "/" << 3.3 << "%" << endl;
 
-	out.close();
+	nameOut.close();
 
-	ifstream in("w_name.txt");//파일 출력(읽기)
+
+	ifstream in(w_name + ".txt");//파일 출력(읽기)
+
 	while (!in.eof())//파일에 있는 요소들이 없을때 까지 쭉 읽음.
 	{
 		in.getline(inputString, 100);
 		cout << inputString << endl;
-
 	}
 
 	cout << endl;
+
+
+	
+	
+
+
 
 	//콘솔창에 최근 입력정보 출력
 	cout << "사업장 이름 : " << w_name << "/시급 : " << w_hpay << "/계약 날짜 : " << w_date << "/야간수당여부 : " << w_night << "/주휴수당여부 : " << w_weekend << "/소득세 여부 : " << w_tax << endl;
