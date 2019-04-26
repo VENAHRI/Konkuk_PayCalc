@@ -81,7 +81,7 @@ bool checkInfo::checkHour(string hour)
 {
 	//4자리 숫자여야 하고 //앞 두자리는 01~24 뒤 두자리는 00~59 정수여야 함
 
-	if (hour.length() > 4) return false; //받아온 hour가 모두 숫자라 가정 했을 때 4자리 숫자가 아니면 false
+	if (hour.length() != 4) return false; //받아온 hour가 모두 숫자라 가정 했을 때 4자리 숫자가 아니면 false
 	
 	int hours = atoi(hour.substr(0, 2).c_str()); // 시 부분
 	int minutes = atoi(hour.substr(2, 2).c_str()); //분 부분
