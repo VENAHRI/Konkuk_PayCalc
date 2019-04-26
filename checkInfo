@@ -9,11 +9,13 @@ class checkInfo
 public:
 	checkInfo();
 	~checkInfo();
-	bool checkDate(string date);//날짜 올바른지
-	bool checkHour(string hour);//출근 시간 올바른지
-	bool isLeaf(int year);//윤년인지
-	int is31(int month);//큰달인지(true) 작은달인지(false)
+	static bool checkDate(string date);//날짜 올바른지
+	static bool checkHour(string hour);//출근 시간 올바른지
+	static bool isLeaf(int year);//윤년인지
+	static int is31(int month);//큰달인지(true) 작은달인지(false)
 };
+
+
 
 
 ------------------------------------------------------------
