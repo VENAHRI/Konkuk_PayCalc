@@ -13,6 +13,8 @@ private:
 	string w_name;
 public:
 	w_Doc();
+	w_Doc(string name);
+	void addRecord(string wDate, string iHour, string oHour);
 	~w_Doc();
 
 };
