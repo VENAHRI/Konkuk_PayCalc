@@ -89,8 +89,8 @@ void WorkDiary::Workdiary()
 			else if (mSelect == '2') continue;
 			else continue;
 
-			fstream writeFile;
-			writeFile.open(w_nameList.at(wSelect - 1), ios::app);
+			ofstream writeFile;
+			writeFile.open(w_nameList.at(wSelect - 1)+".txt", ios::app);
 			writeFile << "#" << wDate << "/" << iHour << "/" << oHour << endl;
 			writeFile.close();
 

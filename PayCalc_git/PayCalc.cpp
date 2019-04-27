@@ -1,7 +1,7 @@
 #include "header.h"
 //#include "global.h"
-//extern vector<string> w_nameList; //
-//extern hash_map<string, w_Doc> w_Book; //
+vector<string> w_nameList; //
+hash_map<string, w_Doc> w_Book; //
 int main() {
 	int select = 0;
 	string inputString;

@@ -1,6 +1,6 @@
 #pragma once
 //----0.전처리구문----//
-//#define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS //해쉬맵 사용가능하게
+#define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS //해쉬맵 사용가능하게
 //----1. header----//
 #include <iostream> //입출력함수
 #include <fstream>  //파일입출력함수
@@ -22,5 +22,5 @@
 #include "WorkPlace.h"
 
 //----4. 전역 변수----//
-vector<string> w_nameList; //
-hash_map<string, w_Doc> w_Book; //
+extern vector<string> w_nameList; //
+extern hash_map<string, w_Doc> w_Book; //
