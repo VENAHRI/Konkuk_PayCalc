@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <algorithm>
 #include "wRecord.h"
-
 using namespace std;
 
 class w_Doc
@@ -15,6 +15,6 @@ public:
 	w_Doc(string name);
 	void addRecord(string wDate, string iHour, string oHour);
 	~w_Doc();
-
+	void sortwDoc();
 };
 

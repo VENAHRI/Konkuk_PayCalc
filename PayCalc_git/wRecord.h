@@ -13,6 +13,9 @@ public:
 	wRecord();
 	wRecord(string wDate, string iHour, string oHour);
 	~wRecord();
+	bool operator<(const wRecord &t) const {
+		return (wDate < t.wDate);
+	}
 
 };
 

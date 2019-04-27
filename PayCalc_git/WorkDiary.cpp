@@ -111,10 +111,19 @@ void WorkDiary::Workdiary()
 			else continue;
 
 			///메모리에 올릴 파트///
-
+			///메모리에 올리고 정렬뒤 파일에 쓰자///
+			//해당 업무일지 vector에 삽입
+			w_Book.at(w_nameList.at(wSelect - 1)).addRecord(wDate, iHour, oHour);
+			//정렬
+			w_Book.at(w_nameList.at(wSelect - 1)).sortwDoc();
 			////////////////////////
+			string str;
+			ifstream list(w_nameList.at(wSelect - 1) + ".txt");
+			getline(list, str); //업무일지 첫줄 긁어서 str에 저장해둠
+			list.close();
 			ofstream writeFile;
-			writeFile.open(w_nameList.at(wSelect - 1)+".txt", ios::app);
+			writeFile.open(w_nameList.at(wSelect - 1)+".txt", ios::out|ios::trunc);
+			writeFile << str<<endl;
 			writeFile << "#" << wDate << "/" << iHour << "/" << oHour << endl;
 			writeFile.close();
 

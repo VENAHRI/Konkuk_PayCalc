@@ -20,3 +20,8 @@ void w_Doc::addRecord(string wDate, string iHour, string oHour)
 w_Doc::~w_Doc()
 {
 }
+
+void w_Doc::sortwDoc()
+{
+	sort(wDoc.begin(), wDoc.end());
+}
