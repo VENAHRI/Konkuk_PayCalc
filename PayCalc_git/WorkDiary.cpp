@@ -89,6 +89,9 @@ void WorkDiary::Workdiary()
 			else if (mSelect == '2') continue;
 			else continue;
 
+			///메모리에 올릴 파트///
+
+			////////////////////////
 			ofstream writeFile;
 			writeFile.open(w_nameList.at(wSelect - 1)+".txt", ios::app);
 			writeFile << "#" << wDate << "/" << iHour << "/" << oHour << endl;
