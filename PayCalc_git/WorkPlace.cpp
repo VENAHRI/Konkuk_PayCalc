@@ -17,7 +17,9 @@ void WorkPlace::Workplace()
 	string w_name;//사업장 이름
 	int w_hpay;
 	string w_date;//시급, 계약날짜
-	int w_night, w_weekend, w_tax; //야간수당여부, 주휴수당여부 , 
+	bool w_night=false, w_weekend=false, w_tax=false; //야간수당여부, 주휴수당여부 ,소득세여부
+	int int_w_night, int_w_weekend, int_w_tax;//야간수당여부, 주휴수당여부 ,소득세여부
+	
 	bool error_check = false; // 사업장 이름, 시급 , 계약 날짜, 야간수당여부, 주휴수당여부, 소득세에 오류가 있는지 체크
 	int N;//for문 인덱스(정보 입력받는 for문)
 	string input_name[6] =
@@ -38,7 +40,7 @@ void WorkPlace::Workplace()
 		cout << endl;
 
 		//스페이스로 구분해서 입력
-		cin >> w_name >> w_hpay >> w_date >> w_night >> w_weekend >> w_tax;
+		cin >> w_name >> w_hpay >> w_date >> int_w_night >> int_w_weekend >> int_w_tax;
 
 		vector<string>::iterator iter;//사업장 이름 리스트에서 최근 입력한거랑 같으면, 중복된 이름이라고 출력
 		iter = find(w_nameList.begin(), w_nameList.end(), w_name);
@@ -94,7 +96,15 @@ void WorkPlace::Workplace()
 				break;
 
 			case 3://야간수당여부 입력조건 틀렸을때
-				if (w_night != 0 && w_night != 1)
+
+				if (int_w_night == 0)
+					w_night = 0;
+				else if (int_w_night == 1)
+					w_night = 1;
+				
+
+
+				if ( (w_night!=0 && w_night != 1) || (int_w_night !=0 && int_w_night !=1) )
 				{
 					if (count > 0)
 						cout << "/" << input_name[N];
@@ -109,7 +119,12 @@ void WorkPlace::Workplace()
 				break;
 
 			case 4://주휴수당여부 입력조건 틀렸을때
-				if (w_weekend != 0 && w_weekend != 1)
+				if (int_w_weekend == 0)
+					w_weekend = 0;
+				else if (int_w_weekend == 1)
+					w_weekend = 1;
+
+				if ((w_weekend != 0 && w_weekend != 1) || (int_w_weekend != 0 && int_w_weekend != 1))
 				{
 					if (count > 0)
 						cout << "/" << input_name[N];
@@ -120,10 +135,16 @@ void WorkPlace::Workplace()
 					count++;
 					error_check = true;
 				}
+
 				break;
 
 			case 5://소득세 종류 입력조건 틀렸을때
-				if (w_tax != 0 && w_tax != 1)
+				if (int_w_tax == 0)
+					w_tax = 0;
+				else if (int_w_tax == 1)
+					w_tax = 1;
+
+				if ((w_tax != 0 && w_tax != 1) || (int_w_tax != 0 && int_w_tax != 1))
 				{
 					if (count > 0)
 						cout << "/" << input_name[N];
@@ -134,8 +155,8 @@ void WorkPlace::Workplace()
 					count++;
 					error_check = true;
 				}
-				break;
 
+				break;
 
 			}
 
