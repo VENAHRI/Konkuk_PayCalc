@@ -11,6 +11,8 @@
 #include <vector> //
 #include <hash_map> //
 
+#include<limits.h> // 버퍼 지우는 함수
+
 //----2. 클래스 정보----//
 #include "w_Doc.h" //근무일지 
 //ㄴ#include "wRecord.h" //근무기록 한줄

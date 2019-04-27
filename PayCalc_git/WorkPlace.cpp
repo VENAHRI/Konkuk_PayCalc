@@ -147,6 +147,10 @@ void WorkPlace::Workplace()
 		{
 			cout << "에 오류가 있습니다." << endl;
 			cout << endl;
+
+			cin.clear();
+			cin.ignore(INT_MAX, '\n'); // 혹시 다른 타입의 값이 들어올 경우 버퍼 제거
+
 			int check;
 
 			cout << "1. 다시입력" << endl;
@@ -156,8 +160,12 @@ void WorkPlace::Workplace()
 
 			while (check != 1 && check != 2)//예외 처리
 			{
+				cin.clear();
+				cin.ignore(INT_MAX, '\n'); // 혹시 다른 타입의 값이 들어올 경우 버퍼 제거
+
 				cout << "1,2중 하나의 숫자를 입력하시오 : ";
 				cin >> check;
+				
 			}
 
 			if (check == 2)
@@ -183,6 +191,9 @@ void WorkPlace::Workplace()
 			{
 				cin >> check;//1,2중 하나만 입력
 				cout << "1,2중 하나의 숫자를 입력하시오 : ";
+				
+				cin.clear();
+				cin.ignore(INT_MAX, '\n'); // 혹시 다른 타입의 값이 들어올 경우 버퍼 제거
 			}
 
 			if (check == 1)
