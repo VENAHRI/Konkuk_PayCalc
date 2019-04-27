@@ -194,6 +194,8 @@ void WorkPlace::Workplace()
 	//입력을 모두 조건에 맞게 입력하였다고 사용자가 최종 판단한 이후
 	vector<string>::iterator iter;
 
+	cout << "\n현재까지 등록된 사업장\n " << endl;
+
 	for (iter = w_nameList.begin(); iter != w_nameList.end(); iter++)
 		cout << *iter << endl;//지금까지의 사업장 이름 출력
 
@@ -242,13 +244,13 @@ void WorkPlace::Workplace()
 
 	ifstream in(w_name + ".txt");//파일 출력(읽기)
 
+	cout << "\n저장된 정보 : " ;
 	while (!in.eof())//파일에 있는 요소들이 없을때 까지 쭉 읽음.
 	{
 		in.getline(inputString, 100);
 		cout << inputString << endl;
 	}
 
-	cout << endl;
 
 
 
