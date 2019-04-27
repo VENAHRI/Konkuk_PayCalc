@@ -175,12 +175,15 @@ a:
 
 	if (mode == 1) {
 		weekdays[0] = w_Book.at(office_name).wDoc.at(0).wDateArr[2];
-		int count = 0;
+		int vec_month, vec_year;
 		for (int i = 1; i < 7; i++) {
 			weekdays[i] = weekdays[i - 1] + 1;
 			if (weekdays[i] > m_date[w_Book.at(office_name).wDoc.at(0).wDateArr[1]])
 				weekdays[i] = 1;
 		}
+		vec_month = w_Book.at(office_name).wDoc.at(0).wDateArr[1];;
+		vec_year = w_Book.at(office_name).wDoc.at(0).wDateArr[0];
+
 
 		for (int k = 0; k < w_Book.at(office_name).wDoc.size(); k++) {
 
@@ -188,17 +191,17 @@ a:
 				if (w_Book.at(office_name).wDoc.at(0).wDateArr[2] == weekdays[t])
 				//gm[k] = w_Book.at(office_name).wDoc.at(k).oHour - w_Book.at(office_name).wDoc.at(k).iHour
 					w_hour += w_Book.at(office_name).wDoc.at(k).oHour - w_Book.at(office_name).wDoc.at(k).iHour;//w_hour+=w_Book.at(office_name).wDoc.at(k).oHour - w_Book.at(office_name).wDoc.at(k).iHour;
-
 			}
-			count++;
-			if (count == 7) {
+			if ((weekdays[6] < w_Book.at(office_name).wDoc.at(k).wDateArr[2]) && vec_month == w_Book.at(office_name).wDoc.at(k).wDateArr[1] || (w_Book.at(office_name).wDoc.at(k).wDateArr[1] > vec_month&&w_Book.at(office_name).wDoc.at(k).wDateArr[0] == vec_year) || vec_year < w_Book.at(office_name).wDoc.at(k).wDateArr[0]) {
+				vec_month = w_Book.at(office_name).wDoc.at(k).wDateArr[1];
+				vec_year = w_Book.at(office_name).wDoc.at(k).wDateArr[0];
 				if (w_hour >= 15) {
 					t_pay += d_pay.at(k);
 				}
 				weekdays[0] += 7;
-				if (weekdays[0] > m_date[w_Book.at(office_name).wDoc.at(0).wDateArr[1]])
-					weekdays[0] -= m_date[w_Book.at(office_name).wDoc.at(0).wDateArr[1]];
-				count = 0;
+				if (weekdays[0] > m_date[w_Book.at(office_name).wDoc.at(k).wDateArr[1]])
+					weekdays[0] -= m_date[w_Book.at(office_name).wDoc.at(k).wDateArr[1]];
+
 				w_hour = 0;
 			}
 		}
@@ -210,26 +213,31 @@ a:
 	else if (mode == 2) {
 		int a = findstart(w_Book.at(office_name).wDoc.at(w_Book.at(office_name).wDoc.size()).wDateArr[1], office_name);
 		weekdays[0] = w_Book.at(office_name).wDoc.at(a).wDateArr[2];
-		int count = 0;
+		int vec_month, vec_year;
 		for (int i = 1; i < 7; i++) {
 			weekdays[i] = weekdays[i - 1] + 1;
 		}
+		vec_month = w_Book.at(office_name).wDoc.at(a).wDateArr[1];
+		vec_year = w_Book.at(office_name).wDoc.at(a).wDateArr[0];
+
+
 		for (int k = a; k < w_Book.at(office_name).wDoc.size(); k++) {
 
 			for (int t = 0; t < 7; t++) {
 				if (weekdays[t] == w_Book.at(office_name).wDoc.at(k).wDateArr[2])
 					w_hour += w_Book.at(office_name).wDoc.at(k).oHour - w_Book.at(office_name).wDoc.at(k).iHour;
 				}
-			count++;
-			if (count == 7) {
+			if ((weekdays[6] < w_Book.at(office_name).wDoc.at(k).wDateArr[2]) && vec_month == w_Book.at(office_name).wDoc.at(k).wDateArr[1] || (w_Book.at(office_name).wDoc.at(k).wDateArr[1] > vec_month&&w_Book.at(office_name).wDoc.at(k).wDateArr[0] == vec_year) || vec_year < w_Book.at(office_name).wDoc.at(k).wDateArr[0]) {
 				if (w_hour >= 15)
 					t_pay += d_pay.at(k);
 				weekdays[0] += 7;
-				if (weekdays[0] > m_date[w_Book.at(office_name).wDoc.at(a).wDateArr[1]])
-					weekdays[0] -= m_date[w_Book.at(office_name).wDoc.at(a).wDateArr[1]];
-				count = 0;
+				if (weekdays[0] > m_date[w_Book.at(office_name).wDoc.at(k).wDateArr[1]])
+					weekdays[0] -= m_date[w_Book.at(office_name).wDoc.at(k).wDateArr[1]];
+
 				w_hour = 0;
+			
 			}
+			
 		}
 		
 		cout << "이번 달에 받을 돈은 "; 
