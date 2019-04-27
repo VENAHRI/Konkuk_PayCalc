@@ -17,7 +17,8 @@ void WorkPlace::Workplace()
 	string w_name;//사업장 이름
 	int w_hpay;
 	string w_date;//시급, 계약날짜
-	bool w_night, w_weekend, w_tax, error_check = false;//야간수당여부, 주휴수당여부, 
+	int w_night, w_weekend, w_tax; //야간수당여부, 주휴수당여부, 
+	bool error_check = false; // 사업장 이름, 시급 , 계약 날짜, 야간수당여부, 주휴수당여부, 소득세에 오류가 있는지 체크
 	int N;//for문 인덱스(정보 입력받는 for문)
 	string input_name[6] =
 	{ "사업장이름","시급","계약날짜","야간수당여부","주휴수당여부","소득세" };
@@ -146,6 +147,10 @@ void WorkPlace::Workplace()
 		{
 			cout << "에 오류가 있습니다." << endl;
 			cout << endl;
+
+			cin.clear();
+			cin.ignore(INT_MAX, '\n'); // 혹시 다른 타입의 값이 들어올 경우 버퍼 제거
+
 			int check;
 
 			cout << "1. 다시입력" << endl;
@@ -155,8 +160,12 @@ void WorkPlace::Workplace()
 
 			while (check != 1 && check != 2)//예외 처리
 			{
+				cin.clear();
+				cin.ignore(INT_MAX, '\n'); // 혹시 다른 타입의 값이 들어올 경우 버퍼 제거
+
 				cout << "1,2중 하나의 숫자를 입력하시오 : ";
 				cin >> check;
+				
 			}
 
 			if (check == 2)
@@ -182,6 +191,9 @@ void WorkPlace::Workplace()
 			{
 				cin >> check;//1,2중 하나만 입력
 				cout << "1,2중 하나의 숫자를 입력하시오 : ";
+				
+				cin.clear();
+				cin.ignore(INT_MAX, '\n'); // 혹시 다른 타입의 값이 들어올 경우 버퍼 제거
 			}
 
 			if (check == 1)
@@ -193,6 +205,8 @@ void WorkPlace::Workplace()
 
 	//입력을 모두 조건에 맞게 입력하였다고 사용자가 최종 판단한 이후
 	vector<string>::iterator iter;
+
+	cout << "\n현재까지 등록된 사업장\n " << endl;
 
 	for (iter = w_nameList.begin(); iter != w_nameList.end(); iter++)
 		cout << *iter << endl;//지금까지의 사업장 이름 출력
@@ -242,13 +256,13 @@ void WorkPlace::Workplace()
 
 	ifstream in(w_name + ".txt");//파일 출력(읽기)
 
+	cout << "\n저장된 정보 : " ;
 	while (!in.eof())//파일에 있는 요소들이 없을때 까지 쭉 읽음.
 	{
 		in.getline(inputString, 100);
 		cout << inputString << endl;
 	}
 
-	cout << endl;
 
 
 
