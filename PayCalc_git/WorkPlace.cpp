@@ -15,8 +15,7 @@ void WorkPlace::Workplace()
 {
 	char inputString[MAX_SIZE];
 	string w_name;//사업장 이름
-	int w_hpay;
-	string w_date;//시급, 계약날짜
+	int w_hpay, w_date;//시급, 계약날짜
 	bool w_night, w_weekend, w_tax, error_check = false;//야간수당여부, 주휴수당여부, 
 	int N;//for문 인덱스(정보 입력받는 for문)
 	string input_name[6] =
@@ -78,8 +77,7 @@ void WorkPlace::Workplace()
 				break;
 
 			case 2://계약날짜 조건 틀렸을 때,
-				//if (w_date < 10000101 || w_date >21991231) {
-				if(!checkInfo::checkDate(w_date)){
+				if (w_date < 10000101 || w_date >21991231) {
 
 					if (count > 0)
 						cout << "/" << input_name[N];
