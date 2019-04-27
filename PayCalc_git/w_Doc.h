@@ -8,10 +8,9 @@ using namespace std;
 class w_Doc
 {
 
-private:
+public:
 	vector<wRecord> wDoc;
 	string w_name;
-public:
 	w_Doc();
 	w_Doc(string name);
 	void addRecord(string wDate, string iHour, string oHour);

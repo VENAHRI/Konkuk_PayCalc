@@ -32,7 +32,7 @@ void WorkDiary::Workdiary()
 
 		int wSelect; //선택한 사업장의 번호
 		cin >> wSelect;
-		while (wSelect < 1 || wSelect > w_nameList.size()) {
+		while (wSelect < 1 || (unsigned)wSelect > w_nameList.size()) {
 			cout << "잘못된 사업장입니다. 다시 입력해 주세요" << endl;
 			for (int i = 0; (unsigned)i < w_nameList.size(); i++) {
 				cout << i + 1 << ": " << w_nameList.at(i) << endl;
