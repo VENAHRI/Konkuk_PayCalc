@@ -32,8 +32,20 @@ void WorkDiary::Workdiary()
 
 		int wSelect; //선택한 사업장의 번호
 		cin >> wSelect;
+		while (wSelect < 1 || wSelect > w_nameList.size()) {
+			cout << "잘못된 사업장입니다. 다시 입력해 주세요" << endl;
+			for (int i = 0; (unsigned)i < w_nameList.size(); i++) {
+				cout << i + 1 << ": " << w_nameList.at(i) << endl;
+			}
+
+			cin.clear();
+			cin.ignore(INT_MAX, '\n'); // 혹시 다른 타입의 값이 들어올 경우 버퍼 제거
+
+			cin >> wSelect;
+		}
+
 		char mSelect; //선택한 메뉴의 번호
-		cout << "1.작성\n";
+		cout << "\n1.작성\n";
 		cout << "2.목록\n";
 		cout << "3.메인 메뉴로 돌아가기\n";
 		cin >> mSelect;
@@ -49,6 +61,10 @@ void WorkDiary::Workdiary()
 			break;
 		case '3':
 		default:
+
+			cin.clear();
+			cin.ignore(INT_MAX, '\n'); // 혹시 다른 타입의 값이 들어올 경우 버퍼 제거
+
 			return; //바로 종료
 			break;
 		}
@@ -76,6 +92,7 @@ void WorkDiary::Workdiary()
 			}
 			if (errorChecked) {
 				cout << "에 오류가 있습니다.\n";
+				while (getchar() != '\n');
 				continue;
 			}
 			cout << "내용이 맞습니까?\n";
@@ -102,7 +119,7 @@ void WorkDiary::Workdiary()
 			_getch();
 			break;
 		}
-		// return;
+		 return;
 	
 }
 
