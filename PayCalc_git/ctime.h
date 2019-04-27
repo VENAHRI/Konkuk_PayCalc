@@ -7,7 +7,6 @@ private:
 	int min;
 public:
 	ctime();
-	ctime(int h, int m);
 	~ctime();
 	// - 연산자 오버라이딩
 };
