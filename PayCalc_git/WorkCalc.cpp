@@ -39,7 +39,8 @@ void WorkCalc::Workcalc()
 	vector<int> d_pay;	//일급
 	int w_hour = 0;	//?????
 	int w_hpay = 0;
-	vector<w_Doc> vec; //여기에 업장이름,근무 년,월,일,출퇴근시간 리턴해주는 함수 대입
+	double taxRate = 0.0; 
+	//vector<w_Doc> vec; //여기에 업장이름,근무 년,월,일,출퇴근시간 리턴해주는 함수 대입
 					   //해당 업장의 근무일지, 타입을 몰라서 일단 w_Doc로 두는데 아마 수정해야됨. 앞부분 애들이 리턴해주는거로 대입예정
 	//사업장 정보는 근무일지 텍스트 파일 첫줄만 파싱 해오기
 	//->해당 근무일지 = w_Book.at(office_name).wDoc 
@@ -80,6 +81,7 @@ a:
 	vector<string>seglist;
 	checkInfo::Tokenize(inputString, seglist, "/");
 	w_hpay = stoi(seglist.at(1));
+	taxRate = stof(seglist.at(5).erase(3,1));
 	list.close();
 	if (errorChecked(office_name, mode)) {
 		int check_users_opnion;
@@ -200,7 +202,9 @@ a:
 				w_hour = 0;
 			}
 		}
-		cout << "근무 첫날부터 이번달까지 받을 돈의 총 합은 " << t_pay << "원 입니다." << endl;
+		
+		cout << "근무 첫날부터 이번달까지 받을 돈의 총 합은 ";
+		cout<< t_pay * (100 - taxRate) << "원 입니다." << endl;
 		system("PAUSE");
 	}
 	else if (mode == 2) {
@@ -227,8 +231,9 @@ a:
 				w_hour = 0;
 			}
 		}
-
-		cout << "이번 달에 받을 돈은 " << t_pay << "원 입니다." << endl;
+		
+		cout << "이번 달에 받을 돈은 "; 
+		cout << t_pay * (100 - taxRate) << "원 입니다." << endl;
 		system("PAUSE");
 	}
 
