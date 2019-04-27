@@ -58,9 +58,8 @@ void WorkDiary::Workdiary()
 		case '1':
 			break;
 		case '2':
-			//printDoc(wSelect); //선택한 사업장 근무일지 벡터를 출력하는 함수 만들어주기
-			cout << "메뉴로 돌아가려면\n 아무키나 누르세요\n";
-			_getch();
+			printDoc(wSelect); //선택한 사업장 근무일지 벡터를 출력하는 함수 만들어주기
+			system("PAUSE");
 			return;
 			break;
 		case '3':
@@ -137,6 +136,13 @@ void WorkDiary::Workdiary()
 		}
 		 return;
 	
+}
+
+void WorkDiary::printDoc(int num)
+{
+	for (int i = 0; i < w_Book.at(w_nameList.at(num - 1)).wDoc.size(); i++) {
+		w_Book.at(w_nameList.at(num - 1)).wDoc.at(i).printR();
+	}
 }
 
 void WorkDiary::showInput(string wDate, string iHour, string oHour)
