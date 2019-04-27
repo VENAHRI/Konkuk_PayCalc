@@ -78,15 +78,23 @@ a:
 		cout << "1. 다시 입력하기   2. 메인 메뉴로 돌아가기" << endl;
 		cin >> check_users_opnion;
 
+		while (check_users_opnion != 1 && check_users_opnion != 2)
+		{
+			cout << "1,2번 중 하나를 입력하세요" << endl;
+			cin >> check_users_opnion;
+		}
+
+
 		if (check_users_opnion == 1) {
 			mode = 0;
 			office_name = "";
 			goto a;
 		}
-		else {
-			//메인메뉴로 가는 방법좀 알려주실래요?
+		else if(check_users_opnion==2) {
+			
 			return;
 		}
+		
 	}
 
 	//하루 일당 계산//
