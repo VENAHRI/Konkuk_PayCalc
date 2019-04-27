@@ -17,7 +17,8 @@ void WorkPlace::Workplace()
 	string w_name;//사업장 이름
 	int w_hpay;
 	string w_date;//시급, 계약날짜
-	bool w_night, w_weekend, w_tax, error_check = false;//야간수당여부, 주휴수당여부, 
+	int w_night, w_weekend, w_tax; //야간수당여부, 주휴수당여부, 
+	bool error_check = false; // 사업장 이름, 시급 , 계약 날짜, 야간수당여부, 주휴수당여부, 소득세에 오류가 있는지 체크
 	int N;//for문 인덱스(정보 입력받는 for문)
 	string input_name[6] =
 	{ "사업장이름","시급","계약날짜","야간수당여부","주휴수당여부","소득세" };
