@@ -146,6 +146,9 @@
     <ClCompile Include="checkInfo.cpp" />
     <ClCompile Include="ctime.cpp" />
     <ClCompile Include="PayCalc.cpp" />
+    <ClCompile Include="WorkCalc.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="WorkDiary.cpp" />
     <ClCompile Include="WorkPlace.cpp" />
     <ClCompile Include="wRecord.cpp" />
@@ -155,6 +158,7 @@
     <ClInclude Include="checkInfo.h" />
     <ClInclude Include="ctime.h" />
     <ClInclude Include="header.h" />
+    <ClInclude Include="WorkCalc.h" />
     <ClInclude Include="WorkDiary.h" />
     <ClInclude Include="WorkPlace.h" />
     <ClInclude Include="wRecord.h" />
