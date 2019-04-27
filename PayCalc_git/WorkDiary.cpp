@@ -21,6 +21,10 @@ void WorkDiary::Workdiary()
 
 		if (fileWR.is_open() == false) {
 			cout << "사업장이 없습니다 추가해주세요.";
+			cout << endl;
+			cout << endl;
+			system("PAUSE");//사업장이 없습니다 추가해주세요 구문 보여주기 위해 
+			
 			return;
 		}
 		else fileWR.close();
