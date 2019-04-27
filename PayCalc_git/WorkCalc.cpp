@@ -38,7 +38,7 @@ void WorkCalc::Workcalc()
 	int t_pay = 0;	//출력할때 쓸 총 급여
 	vector<int> d_pay;	//일급
 	int w_hour = 0;	//?????
-	int w_hpay = 1000;
+	int w_hpay = 0;
 	vector<w_Doc> vec; //여기에 업장이름,근무 년,월,일,출퇴근시간 리턴해주는 함수 대입
 					   //해당 업장의 근무일지, 타입을 몰라서 일단 w_Doc로 두는데 아마 수정해야됨. 앞부분 애들이 리턴해주는거로 대입예정
 	//사업장 정보는 근무일지 텍스트 파일 첫줄만 파싱 해오기
@@ -67,11 +67,20 @@ void WorkCalc::Workcalc()
 		ohour.push_back(vec.at(i).o_hour + vec.at(i).o_min / 60);	//퇴근 소수
 	}
 	*/
+
 a:
 	cout << "계산 모드와 사업장 이름을 입력하세요. (ex." << endl;
 	cout << "1:근무 첫날부터 지금까지 받을 수 있는 모든 돈, 2:이번달에 받을 수 있는 돈" << endl;
 	cin >> mode >> office_name;
 
+//해당사업장의 시급 파싱
+	string inputString;
+	ifstream list(office_name + ".txt");
+	getline(list, inputString);
+	vector<string>seglist;
+	checkInfo::Tokenize(inputString, seglist, "/");
+	w_hpay = stoi(seglist.at(1));
+	list.close();
 	if (errorChecked(office_name, mode)) {
 		int check_users_opnion;
 		cout << "입력이 잘못되었습니다." << endl;
@@ -136,7 +145,7 @@ a:
 				d_pay.push_back(w_hpay * (21 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * 3 + w_hpay * w_Book.at(office_name).wDoc.at(i).oHour.getD()*1.5);
 
 		}
-
+		t_pay += d_pay.at(i); //기본급
 	}
 
 
@@ -206,7 +215,7 @@ a:
 			for (int t = 0; t < 7; t++) {
 				if (weekdays[t] == w_Book.at(office_name).wDoc.at(k).wDateArr[2])
 					w_hour += w_Book.at(office_name).wDoc.at(k).oHour - w_Book.at(office_name).wDoc.at(k).iHour;
-			}
+				}
 			count++;
 			if (count == 7) {
 				if (w_hour >= 15)
