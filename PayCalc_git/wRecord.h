@@ -5,11 +5,11 @@
 using namespace std;
 class wRecord
 {
+public:
 	int wDate;
 	int wDateArr[3];
 	ctime iHour;
 	ctime oHour;
-public:
 	wRecord();
 	wRecord(string wDate, string iHour, string oHour);
 	~wRecord();

@@ -22,6 +22,7 @@
 //----3. 기능 함수----//
 #include "WorkDiary.h" 
 #include "WorkPlace.h"
+#include "WorkCalc.h"
 
 //----4. 전역 변수----//
 extern vector<string> w_nameList; //

@@ -124,7 +124,9 @@ void WorkDiary::Workdiary()
 			ofstream writeFile;
 			writeFile.open(w_nameList.at(wSelect - 1)+".txt", ios::out|ios::trunc);
 			writeFile << str<<endl;
-			writeFile << "#" << wDate << "/" << iHour << "/" << oHour << endl;
+			for (int i = 0; i < w_Book.at(w_nameList.at(wSelect - 1)).wDoc.size(); i++) {
+				writeFile << "#" << w_Book.at(w_nameList.at(wSelect - 1)).wDoc.at(i).wDate << "/" << w_Book.at(w_nameList.at(wSelect - 1)).wDoc.at(i).iHour.getS() << "/" << w_Book.at(w_nameList.at(wSelect - 1)).wDoc.at(i).oHour.getS() << endl;
+			}
 			writeFile.close();
 
 			showInput(wDate, iHour, oHour);

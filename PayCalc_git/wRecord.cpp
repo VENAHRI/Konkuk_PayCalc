@@ -14,8 +14,10 @@ wRecord::wRecord(string wDate, string iHour, string oHour)
 	wDateArr[2] = this->wDate % 10000 % 100;
 	int i = stoi(iHour);
 	this->iHour = ctime(i / 100, i % 100);
+	this->iHour.input = iHour;
 	int o = stoi(oHour);
 	this->oHour = ctime(o / 100, o % 100);
+	this->oHour.input = oHour;
 }
 
 

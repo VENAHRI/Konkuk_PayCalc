@@ -147,7 +147,7 @@
     <ClCompile Include="ctime.cpp" />
     <ClCompile Include="PayCalc.cpp" />
     <ClCompile Include="WorkCalc.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="WorkDiary.cpp" />
     <ClCompile Include="WorkPlace.cpp" />

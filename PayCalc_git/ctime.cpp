@@ -11,6 +11,17 @@ ctime::ctime(int h, int m)
 {
 }
 
+double ctime::getD()
+{
+
+	return hour+(double)min/ (double)60;
+}
+
+string ctime::getS()
+{
+	return input;
+}
+
 
 ctime::~ctime()
 {
