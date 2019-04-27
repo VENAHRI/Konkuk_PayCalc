@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-
+#include <vector>
 using namespace std;
 
 class checkInfo
@@ -13,4 +13,7 @@ public:
 	static bool checkHour(string hour);//출근 시간 올바른지
 	static bool isLeaf(int year);//윤년인지
 	static int is31(int month);//큰달인지(true) 작은달인지(false)
+	static void Tokenize(const string& str,
+		vector<string>& tokens,
+		const string& delimiters = "/");
 };
