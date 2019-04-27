@@ -30,7 +30,7 @@ void WorkDiary::Workdiary()
 			cout << i + 1 << ": " << w_nameList.at(i) << endl;
 		}
 
-		char wSelect; //선택한 사업장의 번호
+		int wSelect; //선택한 사업장의 번호
 		cin >> wSelect;
 		char mSelect; //선택한 메뉴의 번호
 		cout << "1.작성\n";
@@ -102,7 +102,7 @@ void WorkDiary::Workdiary()
 			_getch();
 			break;
 		}
-		return;
+		// return;
 	
 }
 
