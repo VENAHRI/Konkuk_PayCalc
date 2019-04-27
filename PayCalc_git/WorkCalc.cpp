@@ -38,7 +38,7 @@ void WorkCalc::Workcalc()
 	int t_pay = 0;	//출력할때 쓸 총 급여
 	vector<int> d_pay;	//일급
 	int w_hour = 0;	//?????
-	int w_hpay = 0;
+	int w_hpay = 1000;
 	vector<w_Doc> vec; //여기에 업장이름,근무 년,월,일,출퇴근시간 리턴해주는 함수 대입
 					   //해당 업장의 근무일지, 타입을 몰라서 일단 w_Doc로 두는데 아마 수정해야됨. 앞부분 애들이 리턴해주는거로 대입예정
 	//사업장 정보는 근무일지 텍스트 파일 첫줄만 파싱 해오기
