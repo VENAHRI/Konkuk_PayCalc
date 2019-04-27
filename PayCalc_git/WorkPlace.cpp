@@ -78,8 +78,7 @@ void WorkPlace::Workplace()
 				break;
 
 			case 2://계약날짜 조건 틀렸을 때,
-				//if (w_date < 10000101 || w_date >21991231) {
-				if(!checkInfo::checkDate(w_date)){
+				if (!checkInfo::checkDate(w_date)) {
 
 					if (count > 0)
 						cout << "/" << input_name[N];
