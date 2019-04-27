@@ -48,7 +48,7 @@ void WorkCalc::Workcalc()
 	//vector<double> ihour;
 	//vector<double> ohour;//소수로 나타낸 출퇴근시간
 
-	vector<double> gm;	//소수로 나타낸 근무시간, 주휴수당 계산시 이용
+	//vector<double> gm;	//소수로 나타낸 근무시간, 주휴수당 계산시 이용
 	//checkInfo checking;
 
 	int m_date[12];
@@ -104,7 +104,7 @@ a:
 			if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 4)
 				d_pay.push_back(w_hpay * (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()));//해당 사업장 시급 가져오기 (w_hpay)
 
-			else if (4.5 <= (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 8)
+			else if (4.5 <= (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD())&& (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 8)
 				d_pay.push_back(w_hpay * ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) - 0.5));
 
 			else if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) > 8.5)
@@ -112,11 +112,11 @@ a:
 
 		}
 
-		else if (22 <= w_Book.at(office_name).wDoc.at(i).oHour.getD() < 24) {
+		else if (22 <= w_Book.at(office_name).wDoc.at(i).oHour.getD()&& (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 24) {
 			if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 4)
 				d_pay.push_back(w_hpay * (22 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * (w_Book.at(office_name).wDoc.at(i).oHour.getD() - 22)*1.5);
 
-			else if (4.5 <= (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 8)
+			else if (4.5 <= (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD())&& (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 8)
 				d_pay.push_back(w_hpay * (21.5 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * (w_Book.at(office_name).wDoc.at(i).oHour.getD() - 22)*1.5);
 
 
@@ -125,11 +125,11 @@ a:
 
 		}
 
-		else if (0 <= w_Book.at(office_name).wDoc.at(i).oHour.getD() < 6) {
+		else if (0 <= w_Book.at(office_name).wDoc.at(i).oHour.getD()&& w_Book.at(office_name).wDoc.at(i).oHour.getD() < 6) {
 			if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 4)
 				d_pay.push_back(w_hpay * (22 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * 3 + w_hpay * w_Book.at(office_name).wDoc.at(i).oHour.getD()*1.5);
 
-			else if (4.5 <= (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 8)
+			else if (4.5 <= (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD())&& (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 8)
 				d_pay.push_back(w_hpay * (21.5 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * 3 + w_hpay * w_Book.at(office_name).wDoc.at(i).oHour.getD()*1.5);
 
 			else if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) >= 8.5)
@@ -171,10 +171,10 @@ a:
 				weekdays[i] = 1;
 		}
 
-		for (int k = 0; k < vec.size(); k++) {
+		for (int k = 0; k < w_Book.at(office_name).wDoc.size(); k++) {
 
 			for (int t = 0; t < 7; t++) {
-				if (w_Book.at(office_name).wDoc.at(0).wDateArr[2] = weekdays[t])
+				if (w_Book.at(office_name).wDoc.at(0).wDateArr[2] == weekdays[t])
 				//gm[k] = w_Book.at(office_name).wDoc.at(k).oHour - w_Book.at(office_name).wDoc.at(k).iHour
 					w_hour += w_Book.at(office_name).wDoc.at(k).oHour - w_Book.at(office_name).wDoc.at(k).iHour;//w_hour+=w_Book.at(office_name).wDoc.at(k).oHour - w_Book.at(office_name).wDoc.at(k).iHour;
 
@@ -201,7 +201,7 @@ a:
 		for (int i = 1; i < 7; i++) {
 			weekdays[i] = weekdays[i - 1] + 1;
 		}
-		for (int k = a; k < vec.size(); k++) {
+		for (int k = a; k < w_Book.at(office_name).wDoc.size(); k++) {
 
 			for (int t = 0; t < 7; t++) {
 				if (weekdays[t] == w_Book.at(office_name).wDoc.at(k).wDateArr[2])

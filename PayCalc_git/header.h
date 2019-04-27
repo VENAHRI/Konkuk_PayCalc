@@ -5,6 +5,7 @@
 #include <iostream> //입출력함수
 #include <fstream>  //파일입출력함수
 #include <string> //문자열 처리
+#include <string.h>
 #include <stdlib.h> //cls 클리어 콘솔화면
 #include <conio.h> //_getch
 
