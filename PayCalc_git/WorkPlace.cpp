@@ -274,7 +274,7 @@ void WorkPlace::Workplace()
 
 	nameOut.close();
 
-
+	w_Book.insert(hash_map<string, w_Doc>::value_type(w_name, w_Doc(w_name))); //업무일지 책 하나 추가
 	ifstream in(w_name + ".txt");//파일 출력(읽기)
 
 	cout << "\n저장된 정보 : " ;
