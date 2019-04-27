@@ -34,7 +34,7 @@ void WorkCalc::Workcalc()
 {
 	int mode;	//계산모드 번호 입력받는 변수
 	string office_name;
-	int count;	//근무 일지 기록 개수 카운트
+	//int count;	//근무 일지 기록 개수 카운트
 	int t_pay = 0;	//출력할때 쓸 총 급여
 	vector<int> d_pay;	//일급
 	int w_hour = 0;	//?????
@@ -192,7 +192,7 @@ a:
 				//gm[k] = w_Book.at(office_name).wDoc.at(k).oHour - w_Book.at(office_name).wDoc.at(k).iHour
 					w_hour += w_Book.at(office_name).wDoc.at(k).oHour - w_Book.at(office_name).wDoc.at(k).iHour;//w_hour+=w_Book.at(office_name).wDoc.at(k).oHour - w_Book.at(office_name).wDoc.at(k).iHour;
 			}
-			if ((weekdays[6] < w_Book.at(office_name).wDoc.at(k).wDateArr[2]) && vec_month == w_Book.at(office_name).wDoc.at(k).wDateArr[1] || (w_Book.at(office_name).wDoc.at(k).wDateArr[1] > vec_month&&w_Book.at(office_name).wDoc.at(k).wDateArr[0] == vec_year) || vec_year < w_Book.at(office_name).wDoc.at(k).wDateArr[0]) {
+			if (((weekdays[6] < w_Book.at(office_name).wDoc.at(k).wDateArr[2]) &&( vec_month == w_Book.at(office_name).wDoc.at(k).wDateArr[1])) || ((w_Book.at(office_name).wDoc.at(k).wDateArr[1] > vec_month)&&(w_Book.at(office_name).wDoc.at(k).wDateArr[0] == vec_year)) || vec_year < w_Book.at(office_name).wDoc.at(k).wDateArr[0]) {
 				vec_month = w_Book.at(office_name).wDoc.at(k).wDateArr[1];
 				vec_year = w_Book.at(office_name).wDoc.at(k).wDateArr[0];
 				if (w_hour >= 15) {

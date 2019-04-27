@@ -112,6 +112,7 @@ void WorkDiary::Workdiary()
 
 			///메모리에 올릴 파트///
 			///메모리에 올리고 정렬뒤 파일에 쓰자///
+			if (w_Book.count(w_nameList.at(wSelect - 1)) == 0)w_Book.insert(hash_map<string, w_Doc>::value_type(w_nameList.at(wSelect - 1), w_Doc(w_nameList.at(wSelect - 1))));
 			//해당 업무일지 vector에 삽입
 			w_Book.at(w_nameList.at(wSelect - 1)).addRecord(wDate, iHour, oHour);
 			//정렬
