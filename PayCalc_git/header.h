@@ -11,7 +11,7 @@
 
 #include <vector> //
 #include <hash_map> //
-
+#include <regex> //정규식 표현
 #include<limits.h> // 버퍼 지우는 함수
 
 //----2. 클래스 정보----//
