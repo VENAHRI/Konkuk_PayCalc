@@ -1,7 +1,7 @@
 #pragma once
+#include <string>
 #include "ctime.h"
 #include <stdlib.h> //atoi() 문자열 -> 인트
-#include <string>
 #include <iostream>
 using namespace std;
 class wRecord
