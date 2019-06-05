@@ -1,5 +1,5 @@
 #include "WorkPlace.h"
-
+using namespace std;
 
 
 WorkPlace::WorkPlace()
@@ -29,6 +29,8 @@ void WorkPlace::Workplace()
 				  //Æ²¸° º¯¼ö °³¼ö ¼¼ÁÖ±â À§ÇØ ¼±¾ð.
 
 	//regex r_name = "^[°¡-ÆRa-zA-Z0-9]{1,20}$";
+	
+	//201811189 ½Å¼ºÁØ
 	regex r_name("^[°¡-ÆRa-zA-Z0-9]{1,20}$");
 	regex r_hpay("^[1][0]{6}$|^[0]|^[1-9][0-9]{1,5}$");
 	regex r_bool("^[0-1]{1}$");
