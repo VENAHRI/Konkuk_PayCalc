@@ -9,6 +9,7 @@ public:
 	WorkDiary();
 	~WorkDiary();
 	static void Workdiary();
+	static void printDoc(int num);
 	static void showInput(string wDate, string iHour, string oHour);
 };
 

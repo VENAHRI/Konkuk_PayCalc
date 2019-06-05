@@ -24,3 +24,20 @@ wRecord::wRecord(string wDate, string iHour, string oHour)
 wRecord::~wRecord()
 {
 }
+
+void wRecord::printR()
+{
+	string input = iHour.getS();
+	cout << wDate / 10000 << "/";
+	if(wDate % 10000 / 100 >= 10)
+		cout << wDate % 10000 / 100 << "/";
+	else
+		cout <<"0"<< wDate % 10000 / 100 << "/";
+	if (wDate % 10000 % 100 >= 10)
+		cout << wDate % 10000 % 100;
+	else
+		cout <<"0"<< wDate % 10000 % 100;
+	cout << " " << input.at(0) << input.at(1) <<":" << input.at(2) << input.at(3) << " ";
+	input = oHour.getS();
+	cout << input.at(0) << input.at(1) << ":" << input.at(2) << input.at(3) << endl;
+}

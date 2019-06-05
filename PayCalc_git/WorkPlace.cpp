@@ -1,5 +1,5 @@
 #include "WorkPlace.h"
-
+using namespace std;
 
 
 WorkPlace::WorkPlace()
@@ -27,6 +27,15 @@ void WorkPlace::Workplace()
 	//Á¤º¸ ÀÔ·ÂÇÒ ¶§ ¾îµğ ºÎºĞÀÌ Æ²·È´ÂÁö ¾Ë·ÁÁÖ±â À§ÇØ ¸¸µç stringÇü ¹è¿­.
 	int count = 0;//Á¤º¸µé Ãâ·ÂÇÒ¶§ ÇÑ°³ ÀÌ»óÀÌ¸é '/'·Î ±¸ºĞÇØ¾ß ÇÏ±â ¶§¹®¿¡
 				  //Æ²¸° º¯¼ö °³¼ö ¼¼ÁÖ±â À§ÇØ ¼±¾ğ.
+
+	//regex r_name = "^[°¡-ÆRa-zA-Z0-9]{1,20}$";
+	
+	//201811189 ½Å¼ºÁØ
+	regex r_name("^[°¡-ÆRa-zA-Z0-9]{1,20}$");
+	regex r_hpay("^[1][0]{6}$|^[0]|^[1-9][0-9]{1,5}$");
+	regex r_bool("^[0-1]{1}$");
+
+
 	while (1) {
 		error_check = false;
 		count = 0;//countº¯¼ö ÃÊ±âÈ­
@@ -50,7 +59,7 @@ void WorkPlace::Workplace()
 			switch (N)
 			{
 			case 0://»ç¾÷ÀåÀÌ¸§ Á¶°Ç Æ²·ÈÀ» ¶§
-				if (iter == w_nameList.end() && w_name.length() > 20) {//Áßº¹µÇ´Â°Ç ¾Æ´ÏÁö¸¸, Á¶°Ç Æ²·ÈÀ»¶§
+				if (iter == w_nameList.end() && regex_match(w_name,r_name)) {//Áßº¹µÇ´Â°Ç ¾Æ´ÏÁö¸¸, Á¶°Ç Æ²·ÈÀ»¶§
 
 					cout << input_name[N];//»ç¾÷Àå ÀÌ¸§ÀÌ Æ²·È´Ù°í Ãâ·Â
 					count++;//"/"¿©ºÎ¸¦ À§ÇØ count++;
@@ -67,7 +76,7 @@ void WorkPlace::Workplace()
 				break;
 
 			case 1:
-				if (w_hpay < 0 || w_hpay>1000000) {//½Ã±Ş Á¶°Ç Æ²·ÈÀ»¶§
+				if (regex_match(to_string(w_hpay),r_hpay)) {//½Ã±Ş Á¶°Ç Æ²·ÈÀ»¶§
 					if (count > 0)//Æ²¸° ºÎºĞÀÌ 1°³ÀÌ»óÀÏ¶§,"/"·Î ±¸ºĞ
 						cout << "/" << input_name[N];
 
@@ -104,7 +113,7 @@ void WorkPlace::Workplace()
 				
 
 
-				if ( (w_night!=0 && w_night != 1) || (int_w_night !=0 && int_w_night !=1) )
+				if ( (regex_match(to_string(w_night),r_bool)) || (int_w_night !=0 && int_w_night !=1) )
 				{
 					if (count > 0)
 						cout << "/" << input_name[N];
@@ -124,7 +133,7 @@ void WorkPlace::Workplace()
 				else if (int_w_weekend == 1)
 					w_weekend = 1;
 
-				if ((w_weekend != 0 && w_weekend != 1) || (int_w_weekend != 0 && int_w_weekend != 1))
+				if ((regex_match(to_string(w_weekend), r_bool)) || (int_w_weekend != 0 && int_w_weekend != 1))
 				{
 					if (count > 0)
 						cout << "/" << input_name[N];
@@ -144,7 +153,7 @@ void WorkPlace::Workplace()
 				else if (int_w_tax == 1)
 					w_tax = 1;
 
-				if ((w_tax != 0 && w_tax != 1) || (int_w_tax != 0 && int_w_tax != 1))
+				if ((regex_match(to_string(w_tax), r_bool)) || (int_w_tax != 0 && int_w_tax != 1))
 				{
 					if (count > 0)
 						cout << "/" << input_name[N];
