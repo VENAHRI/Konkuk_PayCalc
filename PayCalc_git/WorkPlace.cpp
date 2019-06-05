@@ -51,6 +51,8 @@ void WorkPlace::Workplace()
 		//스페이스로 구분해서 입력
 		cin >> w_name >> w_hpay >> w_date >> int_w_night >> int_w_weekend >> int_w_tax;
 
+
+
 		vector<string>::iterator iter;//사업장 이름 리스트에서 최근 입력한거랑 같으면, 중복된 이름이라고 출력
 		iter = find(w_nameList.begin(), w_nameList.end(), w_name);
 
@@ -59,7 +61,7 @@ void WorkPlace::Workplace()
 			switch (N)
 			{
 			case 0://사업장이름 조건 틀렸을 때
-				if (iter == w_nameList.end() && regex_match(w_name,r_name)) {//중복되는건 아니지만, 조건 틀렸을때
+				if (iter == w_nameList.end() && !regex_match(w_name, r_name)) {//중복되는건 아니지만, 조건 틀렸을때
 
 					cout << input_name[N];//사업장 이름이 틀렸다고 출력
 					count++;//"/"여부를 위해 count++;
@@ -76,7 +78,7 @@ void WorkPlace::Workplace()
 				break;
 
 			case 1:
-				if (regex_match(to_string(w_hpay),r_hpay)) {//시급 조건 틀렸을때
+				if (!regex_match(to_string(w_hpay),r_hpay)) {//시급 조건 틀렸을때
 					if (count > 0)//틀린 부분이 1개이상일때,"/"로 구분
 						cout << "/" << input_name[N];
 
@@ -113,7 +115,7 @@ void WorkPlace::Workplace()
 				
 
 
-				if ( (regex_match(to_string(w_night),r_bool)) || (int_w_night !=0 && int_w_night !=1) )
+				if ( !(regex_match(to_string(w_night),r_bool)) || (int_w_night !=0 && int_w_night !=1) )
 				{
 					if (count > 0)
 						cout << "/" << input_name[N];
@@ -133,7 +135,7 @@ void WorkPlace::Workplace()
 				else if (int_w_weekend == 1)
 					w_weekend = 1;
 
-				if ((regex_match(to_string(w_weekend), r_bool)) || (int_w_weekend != 0 && int_w_weekend != 1))
+				if (!(regex_match(to_string(w_weekend), r_bool)) || (int_w_weekend != 0 && int_w_weekend != 1))
 				{
 					if (count > 0)
 						cout << "/" << input_name[N];
@@ -153,7 +155,7 @@ void WorkPlace::Workplace()
 				else if (int_w_tax == 1)
 					w_tax = 1;
 
-				if ((regex_match(to_string(w_tax), r_bool)) || (int_w_tax != 0 && int_w_tax != 1))
+				if (!(regex_match(to_string(w_tax), r_bool)) || (int_w_tax != 0 && int_w_tax != 1))
 				{
 					if (count > 0)
 						cout << "/" << input_name[N];

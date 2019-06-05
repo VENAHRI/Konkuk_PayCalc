@@ -18,11 +18,13 @@
 //ㄴ#include "wRecord.h" //근무기록 한줄
 //ㄴㄴ#include "ctime.h"  //시각 저장
 #include "checkInfo.h" //입력의 적합성 따지는 여러 함수들 포함
-#include <regex> //정규식 표현 // 재정의 오류로 인해 순서의 변경
+
 
 #include "WorkDiary.h" 
 #include "WorkPlace.h"
 #include "WorkCalc.h"
+
+#include <regex> //정규식 표현 // 재정의 오류로 인해 순서의 변경
 
 //----4. 전역 변수----//
 extern vector<string> w_nameList; //
