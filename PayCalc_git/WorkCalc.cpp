@@ -36,7 +36,7 @@ void WorkCalc::Workcalc()
 	int mode;   //계산모드 번호 입력받는 변수
 	string office_name;
 	int count;   //근무 일지 기록 개수 카운트
-	int t_pay = 0;   //출력할때 쓸 총 급여
+	double t_pay = 0;   //출력할때 쓸 총 급여
 	vector<int> d_pay;   //일급
 	int w_hour = 0;   //?????
 	int w_hpay = 0;
@@ -180,15 +180,15 @@ a:
 	if (mode == 1) {
 
 		weekdays[0] = w_Book.at(office_name).wDoc.at(0).wDateArr[2];
-		int vec_month, vec_year;
+		//int vec_month, vec_year;
 		for (int i = 1; i < 7; i++) {
 			weekdays[i] = weekdays[i - 1] + 1;
 			if (weekdays[i] > m_date[w_Book.at(office_name).wDoc.at(0).wDateArr[1]])
 				weekdays[i] = 1;
 		}
 
-		vec_month = w_Book.at(office_name).wDoc.at(0).wDateArr[1];;
-		vec_year = w_Book.at(office_name).wDoc.at(0).wDateArr[0];
+		//vec_month = w_Book.at(office_name).wDoc.at(0).wDateArr[1];;
+		//vec_year = w_Book.at(office_name).wDoc.at(0).wDateArr[0];
 
 
 		for (int k = 0; k < w_Book.at(office_name).wDoc.size(); k++) {
@@ -205,8 +205,8 @@ a:
 			}
 			if ((weekdays[6] < w_Book.at(office_name).wDoc.at(k).wDateArr[2]) || k == w_Book.at(office_name).wDoc.size() - 1)
 			{
-				vec_month = w_Book.at(office_name).wDoc.at(k).wDateArr[1];
-				vec_year = w_Book.at(office_name).wDoc.at(k).wDateArr[0];
+				//			vec_month = w_Book.at(office_name).wDoc.at(k).wDateArr[1];
+				//			vec_year = w_Book.at(office_name).wDoc.at(k).wDateArr[0];
 
 				if (w_hour >= 15) {
 					t_pay += sum / wwc;
@@ -231,31 +231,33 @@ a:
 		system("PAUSE");
 	}
 	else if (mode == 2) {
-
+		double m_pay = 0;
 		int a = findstart(w_Book.at(office_name).wDoc.at(w_Book.at(office_name).wDoc.size() - 1).wDateArr[1], office_name);
 
 		weekdays[0] = w_Book.at(office_name).wDoc.at(a).wDateArr[2];
-		int vec_month, vec_year;
+		//	int vec_month, vec_year;
 		for (int i = 1; i < 7; i++) {
 			weekdays[i] = weekdays[i - 1] + 1;
 		}
-		vec_month = w_Book.at(office_name).wDoc.at(a).wDateArr[1];
-		vec_year = w_Book.at(office_name).wDoc.at(a).wDateArr[0];
+		//	vec_month = w_Book.at(office_name).wDoc.at(a).wDateArr[1];
+		//	vec_year = w_Book.at(office_name).wDoc.at(a).wDateArr[0];
 
 
 		for (int k = a; k < w_Book.at(office_name).wDoc.size(); k++) {
+
 
 			for (int t = 0; t < 7; t++) {
 				if (weekdays[t] == w_Book.at(office_name).wDoc.at(k).wDateArr[2]) {
 					w_hour += w_Book.at(office_name).wDoc.at(k).oHour - w_Book.at(office_name).wDoc.at(k).iHour;
 					sum += d_pay.at(k);
+					m_pay += d_pay.at(k);
 					wwc++;
 				}
 			}
 			if ((weekdays[6] < w_Book.at(office_name).wDoc.at(k).wDateArr[2]) || k == w_Book.at(office_name).wDoc.size() - 1) {
 				if (w_hour >= 15)
 				{
-					t_pay += sum / wwc;
+					m_pay += sum / wwc;
 
 				}
 				weekdays[0] += 7;
@@ -274,7 +276,7 @@ a:
 		}
 
 		cout << "이번 달에 받을 돈은 ";
-		cout << int(t_pay * (100 - taxRate) / 100) << "원 입니다." << endl;
+		cout << int(m_pay * (100 - taxRate) / 100) << "원 입니다." << endl;
 		system("PAUSE");
 	}
 
