@@ -14,7 +14,9 @@ checkInfo::~checkInfo()
 
 bool checkInfo::checkDate(string date)
 {
-	if (date.length() < 8) return false; // string의 길이가 8이하
+	regex r_date("^([1][0-9]|[2][01])[0-9][0-9]([0][0-9]|[1][0-2])([0-2][0-9]|[3][01])$");
+	if (!regex_match(date, r_date)); return false;
+	//if (date.length() < 8) return false; // string의 길이가 8이하
 
 	int dateInt = atoi(date.c_str()); //스트링 전체를 int로
 	int years = atoi(date.substr(0, 4).c_str()); //년 부분
@@ -22,11 +24,11 @@ bool checkInfo::checkDate(string date)
 	int dates = atoi(date.substr(6, 2).c_str()); //일 부분
 
 
-	if (21991231 < dateInt || dateInt < 10000101) return false; //10000101과 21991231 사이의 8자리 정수여야 한다.
+	//if (21991231 < dateInt || dateInt < 10000101) return false; //10000101과 21991231 사이의 8자리 정수여야 한다.
 
-	if (2199 < years || years < 1000) return false; //1000~2199년 사이
-	if (12 < months || months < 1) return false; //1~12월 사이
-	if (31 < dates || dates < 1) return false; //1~31일 사이
+	//if (2199 < years || years < 1000) return false; //1000~2199년 사이
+	//if (12 < months || months < 1) return false; //1~12월 사이
+	//if (31 < dates || dates < 1) return false; //1~31일 사이
 
 
 	if (is31(months) == 0) { //작은 달 이면
