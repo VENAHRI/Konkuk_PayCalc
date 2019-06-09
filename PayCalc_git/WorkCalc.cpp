@@ -43,6 +43,8 @@ void WorkCalc::Workcalc()
 	double taxRate = 0.0;
 	double sum = 0;
 	int wwc = 0;
+	string juhu;
+	string night;
 	//vector<w_Doc> vec; //여기에 업장이름,근무 년,월,일,출퇴근시간 리턴해주는 함수 대입
 	//해당 업장의 근무일지, 타입을 몰라서 일단 w_Doc로 두는데 아마 수정해야됨. 앞부분 애들이 리턴해주는거로 대입예정
 	//사업장 정보는 근무일지 텍스트 파일 첫줄만 파싱 해오기
@@ -85,6 +87,8 @@ a:
 	checkInfo::Tokenize(inputString, seglist, "/");
 	w_hpay = stoi(seglist.at(1));
 	taxRate = stof(seglist.at(5).erase(3, 1));
+	night = seglist.at(3);
+	juhu = seglist.at(4);
 	list.close();
 	if (errorChecked(office_name, mode)) {
 		int check_users_opnion;
@@ -114,44 +118,139 @@ a:
 	//ohour -> w_Book.at(office_name).wDoc.at(i).oHour.getD();
 	//w_Book.at(office_name).wDoc.at(1).iHour.getD();
 	for (int i = 0; i < w_Book.at(office_name).wDoc.size(); i++) {
-		if (w_Book.at(office_name).wDoc.at(i).oHour.getD() < 22) {
-			if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 4)
+		if (w_Book.at(office_name).wDoc.at(i).oHour.getD() < 22 && (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()>0) && night == "X") {
+
+			if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 4) {
 				d_pay.push_back(w_hpay * (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()));//해당 사업장 시급 가져오기 (w_hpay)
 
+			}
+
 			else if (4.5 <= (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) && (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 8)
+			{
 				d_pay.push_back(w_hpay * ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) - 0.5));
 
-			else if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) > 8.5)
+			}
+			else if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) > 8.5) {
 				d_pay.push_back(w_hpay * ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) - 1));
 
+			}
 		}
+		else if (w_Book.at(office_name).wDoc.at(i).oHour.getD() < 22 && (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() < 0) && night == "O") {
+			if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) < 4) {
+				if (w_Book.at(office_name).wDoc.at(i).iHour.getD() < 22) {
+					d_pay.push_back(w_hpay * 1.5*(2 + w_Book.at(office_name).wDoc.at(i).oHour.getD()) + w_hpay * (22 - (w_Book.at(office_name).wDoc.at(i).iHour.getD())));//해당 사업장 시급 가져오기 (w_hpay)
 
+				}
+				else if (w_Book.at(office_name).wDoc.at(i).iHour.getD() >= 22) {
+					d_pay.push_back(w_hpay * 1.5*(24 - w_Book.at(office_name).wDoc.at(i).iHour.getD() + w_Book.at(office_name).wDoc.at(i).oHour.getD()));//해당 사업장 시급 가져오기 (w_hpay)
+
+				}
+			}
+			else if (4.5 <= (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) && (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) < 8)
+			{
+
+				if (w_Book.at(office_name).wDoc.at(i).iHour.getD() < 22) {
+					d_pay.push_back(w_hpay * 1.5*((w_Book.at(office_name).wDoc.at(i).oHour.getD() + 2) - 0.5) + w_hpay * (22 - w_Book.at(office_name).wDoc.at(i).iHour.getD()));
+
+				}
+				else if (w_Book.at(office_name).wDoc.at(i).iHour.getD() >= 22) {
+					d_pay.push_back(w_hpay * 1.5*((w_Book.at(office_name).wDoc.at(i).oHour.getD() + 24 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) - 0.5));
+				}
+			}
+			else if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) > 8.5) {
+				if (w_Book.at(office_name).wDoc.at(i).iHour.getD() < 22) {
+					d_pay.push_back(w_hpay * 1.5*((w_Book.at(office_name).wDoc.at(i).oHour.getD() + 2) - 1.0) + w_hpay * (22 - w_Book.at(office_name).wDoc.at(i).iHour.getD()));
+				}
+				else if (w_Book.at(office_name).wDoc.at(i).iHour.getD() >= 22) {
+					d_pay.push_back(w_hpay * 1.5*((w_Book.at(office_name).wDoc.at(i).oHour.getD() + 24 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) - 1.0));
+				}
+
+
+			}
+		}
+		else if (w_Book.at(office_name).wDoc.at(i).oHour.getD() < 22 && (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() < 0 && night == "X")) {
+
+			if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) < 4) {
+				if (w_Book.at(office_name).wDoc.at(i).iHour.getD() < 22) {
+					d_pay.push_back(w_hpay * (2 + w_Book.at(office_name).wDoc.at(i).oHour.getD()) + w_hpay * (22 - (w_Book.at(office_name).wDoc.at(i).iHour.getD())));//해당 사업장 시급 가져오기 (w_hpay)
+
+				}
+				else if (w_Book.at(office_name).wDoc.at(i).iHour.getD() >= 22) {
+					d_pay.push_back(w_hpay * (24 - w_Book.at(office_name).wDoc.at(i).iHour.getD() + w_Book.at(office_name).wDoc.at(i).oHour.getD()));//해당 사업장 시급 가져오기 (w_hpay)
+
+				}
+			}
+			else if (4.5 <= (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) && (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) < 8)
+			{
+
+				if (w_Book.at(office_name).wDoc.at(i).iHour.getD() < 22) {
+					d_pay.push_back(w_hpay * ((w_Book.at(office_name).wDoc.at(i).oHour.getD() + 2) - 0.5) + w_hpay * (22 - w_Book.at(office_name).wDoc.at(i).iHour.getD()));
+
+				}
+				else if (w_Book.at(office_name).wDoc.at(i).iHour.getD() >= 22) {
+
+					d_pay.push_back(w_hpay * ((w_Book.at(office_name).wDoc.at(i).oHour.getD() + 24 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) - 0.5));
+				}
+			}
+			else if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) > 8.5) {
+				if (w_Book.at(office_name).wDoc.at(i).iHour.getD() < 22) {
+
+					d_pay.push_back(w_hpay * ((w_Book.at(office_name).wDoc.at(i).oHour.getD() + 2) - 1.0) + w_hpay * (22 - w_Book.at(office_name).wDoc.at(i).iHour.getD()));
+				}
+				else if (w_Book.at(office_name).wDoc.at(i).iHour.getD() >= 22) {
+
+					d_pay.push_back(w_hpay * ((w_Book.at(office_name).wDoc.at(i).oHour.getD() + 24 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) - 1.0));
+				}
+
+
+			}
+		}
 		else if (22 <= w_Book.at(office_name).wDoc.at(i).oHour.getD() && (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 24) {
-			if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 4)
+
+			if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 4) {
 				d_pay.push_back(w_hpay * (22 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * (w_Book.at(office_name).wDoc.at(i).oHour.getD() - 22)*1.5);
 
-			else if (4.5 <= (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) && (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 8)
+			}
+			else if (4.5 <= (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) && (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 8) {
 				d_pay.push_back(w_hpay * (21.5 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * (w_Book.at(office_name).wDoc.at(i).oHour.getD() - 22)*1.5);
 
+			}
 
-			else if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) >= 8.5)
+			else if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) >= 8.5) {
+
 				d_pay.push_back(w_hpay * (21 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * (w_Book.at(office_name).wDoc.at(i).oHour.getD() - 22)*1.5);
 
+			}
 		}
 
 		else if (0 <= w_Book.at(office_name).wDoc.at(i).oHour.getD() && w_Book.at(office_name).wDoc.at(i).oHour.getD() < 6) {
-			if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 4)
+
+			if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) < 4 && night == "O") {
 				d_pay.push_back(w_hpay * (22 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * 3 + w_hpay * w_Book.at(office_name).wDoc.at(i).oHour.getD()*1.5);
 
-			else if (4.5 <= (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) && (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) < 8)
-				d_pay.push_back(w_hpay * (21.5 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * 3 + w_hpay * w_Book.at(office_name).wDoc.at(i).oHour.getD()*1.5);
+			}
+			else if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) < 4 && night == "X") {
+				d_pay.push_back(w_hpay * (22 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * 2 + w_hpay * w_Book.at(office_name).wDoc.at(i).oHour.getD());
 
-			else if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD()) >= 8.5)
-				d_pay.push_back(w_hpay * (21 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * 3 + w_hpay * w_Book.at(office_name).wDoc.at(i).oHour.getD()*1.5);
+			}
+			else if (4.5 <= (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) && (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) < 8 && night == "O") {
+				d_pay.push_back(w_hpay * (22 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * 3 + w_hpay * 1.5 * (w_Book.at(office_name).wDoc.at(i).oHour.getD() - 0.5));
 
+			}
+			else if (4.5 <= (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) && (w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) < 8 && night == "X") {
+				d_pay.push_back(w_hpay * (22 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * 2 + w_hpay * (w_Book.at(office_name).wDoc.at(i).oHour.getD() - 0.5));
+
+			}
+			else if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) >= 8.5 && night == "O") {
+				d_pay.push_back(w_hpay * (22 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * 3 + w_hpay * 1.5 * (w_Book.at(office_name).wDoc.at(i).oHour.getD() - 1));
+			}
+			else if ((w_Book.at(office_name).wDoc.at(i).oHour.getD() - w_Book.at(office_name).wDoc.at(i).iHour.getD() + 24) >= 8.5 && night == "X") {
+				d_pay.push_back(w_hpay * (22 - w_Book.at(office_name).wDoc.at(i).iHour.getD()) + w_hpay * 2 + w_hpay * (w_Book.at(office_name).wDoc.at(i).oHour.getD() - 1));
+			}
 		}
 		t_pay += d_pay.at(i); //기본급
 							  //cout << t_pay;
+
 	}
 
 
@@ -177,8 +276,9 @@ a:
 		}
 	}
 
-	if (mode == 1) {
 
+	if (mode == 1) {
+		int nowmonth = w_Book.at(office_name).wDoc.at(0).wDateArr[1];
 		weekdays[0] = w_Book.at(office_name).wDoc.at(0).wDateArr[2];
 		//int vec_month, vec_year;
 		for (int i = 1; i < 7; i++) {
@@ -190,41 +290,58 @@ a:
 		//vec_month = w_Book.at(office_name).wDoc.at(0).wDateArr[1];;
 		//vec_year = w_Book.at(office_name).wDoc.at(0).wDateArr[0];
 
-
 		for (int k = 0; k < w_Book.at(office_name).wDoc.size(); k++) {
 
+
 			for (int t = 0; t < 7; t++) {
+
 				if (w_Book.at(office_name).wDoc.at(k).wDateArr[2] == weekdays[t]) {
 					//gm[k] = w_Book.at(office_name).wDoc.at(k).oHour - w_Book.at(office_name).wDoc.at(k).iHour
 					w_hour += w_Book.at(office_name).wDoc.at(k).oHour - w_Book.at(office_name).wDoc.at(k).iHour;//w_hour+=w_Book.at(office_name).wDoc.at(k).oHour - w_Book.at(office_name).wDoc.at(k).iHour;
 					sum += d_pay.at(k);
 					wwc++;
-
-
 				}
 			}
-			if ((weekdays[6] < w_Book.at(office_name).wDoc.at(k).wDateArr[2]) || k == w_Book.at(office_name).wDoc.size() - 1)
-			{
-				//			vec_month = w_Book.at(office_name).wDoc.at(k).wDateArr[1];
-				//			vec_year = w_Book.at(office_name).wDoc.at(k).wDateArr[0];
 
-				if (w_hour >= 15) {
+			if ((k < w_Book.at(office_name).wDoc.size() - 1 && (weekdays[6] < w_Book.at(office_name).wDoc.at(k + 1).wDateArr[2] || w_Book.at(office_name).wDoc.at(k + 1).wDateArr[1]>w_Book.at(office_name).wDoc.at(k).wDateArr[1])) || 1 == w_Book.at(office_name).wDoc.size() || k == w_Book.at(office_name).wDoc.size() - 1)
+			{
+
+				if (w_hour >= 15 && juhu == "O") {
 					t_pay += sum / wwc;
 
+				}
 
+
+				if (k < w_Book.at(office_name).wDoc.size() - 1 && ((weekdays[6] < w_Book.at(office_name).wDoc.at(k + 1).wDateArr[2]) || nowmonth< w_Book.at(office_name).wDoc.at(k + 1).wDateArr[1])) {
+					do {
+						weekdays[0] += 7;
+						if (weekdays[0] > m_date[nowmonth - 1]) {
+							weekdays[0] = weekdays[0] - m_date[nowmonth - 1];
+
+						}
+						for (int l = 1; l < 7; l++) {
+							weekdays[l] = weekdays[l - 1] + 1;
+							if (weekdays[l] > m_date[w_Book.at(office_name).wDoc.at(k).wDateArr[1] - 1]) {
+								weekdays[l] = 1;
+								if (nowmonth < w_Book.at(office_name).wDoc.at(k + 1).wDateArr[1] && weekdays[l] == 1)
+									nowmonth++;
+							}
+						}
+						//cout <<nowmonth << endl;
+
+
+
+					} while ((nowmonth <= w_Book.at(office_name).wDoc.at(k + 1).wDateArr[1] && weekdays[6] < w_Book.at(office_name).wDoc.at(k + 1).wDateArr[2]) || nowmonth< w_Book.at(office_name).wDoc.at(k + 1).wDateArr[1] && weekdays[6]>w_Book.at(office_name).wDoc.at(k + 1).wDateArr[2]);
 				}
-				weekdays[0] += 7;
-				for (int i = 1; i < 7; i++) {
-					weekdays[i] = weekdays[0] + i;
-				}
-				if (weekdays[0] > m_date[w_Book.at(office_name).wDoc.at(k).wDateArr[1]])
-					weekdays[0] -= m_date[w_Book.at(office_name).wDoc.at(k).wDateArr[1]];
 
 				w_hour = 0;
 				sum = 0;
 				wwc = 0;
 			}
+
+
 		}
+
 
 		cout << "근무 첫날부터 이번달까지 받을 돈의 총 합은 ";
 		cout << int(t_pay * (100 - taxRate) / 100) << "원 입니다." << endl;
@@ -234,13 +351,14 @@ a:
 		double m_pay = 0;
 		int a = findstart(w_Book.at(office_name).wDoc.at(w_Book.at(office_name).wDoc.size() - 1).wDateArr[1], office_name);
 
+
 		weekdays[0] = w_Book.at(office_name).wDoc.at(a).wDateArr[2];
-		//	int vec_month, vec_year;
+		//   int vec_month, vec_year;
 		for (int i = 1; i < 7; i++) {
 			weekdays[i] = weekdays[i - 1] + 1;
 		}
-		//	vec_month = w_Book.at(office_name).wDoc.at(a).wDateArr[1];
-		//	vec_year = w_Book.at(office_name).wDoc.at(a).wDateArr[0];
+		//   vec_month = w_Book.at(office_name).wDoc.at(a).wDateArr[1];
+		//   vec_year = w_Book.at(office_name).wDoc.at(a).wDateArr[0];
 
 
 		for (int k = a; k < w_Book.at(office_name).wDoc.size(); k++) {
@@ -254,24 +372,28 @@ a:
 					wwc++;
 				}
 			}
-			if ((weekdays[6] < w_Book.at(office_name).wDoc.at(k).wDateArr[2]) || k == w_Book.at(office_name).wDoc.size() - 1) {
-				if (w_hour >= 15)
-				{
+			if (k < w_Book.at(office_name).wDoc.size() - 1 && (weekdays[6] < w_Book.at(office_name).wDoc.at(k + 1).wDateArr[2]) || k == w_Book.at(office_name).wDoc.size() - 1) {
+
+				if (w_hour >= 15 && juhu == "O") {
 					m_pay += sum / wwc;
-
 				}
-				weekdays[0] += 7;
-				for (int i = 1; i < 7; i++) {
-					weekdays[i] = weekdays[0] + i;
-				}
-				if (weekdays[0] > m_date[w_Book.at(office_name).wDoc.at(k).wDateArr[1]])
-					weekdays[0] -= m_date[w_Book.at(office_name).wDoc.at(k).wDateArr[1]];
+				do {
+					weekdays[0] += 7;
 
+					for (int l = 1; l < 7; l++) {
+						if (weekdays[l] > m_date[w_Book.at(office_name).wDoc.at(k).wDateArr[1] - 1]) {
+							weekdays[l] = 1;
+						}
+						weekdays[l] = weekdays[l - 1] + 1;
+					}
+
+				} while (k < w_Book.at(office_name).wDoc.size() - 1 && weekdays[6]< w_Book.at(office_name).wDoc.at(k + 1).wDateArr[2]);
 				w_hour = 0;
 				sum = 0;
 				wwc = 0;
-
 			}
+
+
 
 		}
 
@@ -279,6 +401,5 @@ a:
 		cout << int(m_pay * (100 - taxRate) / 100) << "원 입니다." << endl;
 		system("PAUSE");
 	}
-
 
 }
