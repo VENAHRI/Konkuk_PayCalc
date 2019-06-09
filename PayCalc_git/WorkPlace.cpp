@@ -55,12 +55,13 @@ void WorkPlace::Workplace()
 
 		vector<string>::iterator iter;//사업장 이름 리스트에서 최근 입력한거랑 같으면, 중복된 이름이라고 출력
 		iter = find(w_nameList.begin(), w_nameList.end(), w_name);
-
+		bool debugchecker = regex_match(w_name, r_name);
 		for (N = 0; N < 6; N++)
 		{
 			switch (N)
 			{
 			case 0://사업장이름 조건 틀렸을 때
+				
 				if (iter == w_nameList.end() && !regex_match(w_name, r_name)) {//중복되는건 아니지만, 조건 틀렸을때
 
 					cout << input_name[N];//사업장 이름이 틀렸다고 출력
