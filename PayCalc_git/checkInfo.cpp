@@ -15,7 +15,7 @@ checkInfo::~checkInfo()
 bool checkInfo::checkDate(string date)
 {
 	regex r_date("^([1][0-9]|[2][01])[0-9][0-9]([0][0-9]|[1][0-2])([0-2][0-9]|[3][01])$");
-	if (!regex_match(date, r_date)); return false;
+	if (!regex_match(date, r_date)) return false;
 	//if (date.length() < 8) return false; // string의 길이가 8이하
 
 	int dateInt = atoi(date.c_str()); //스트링 전체를 int로
